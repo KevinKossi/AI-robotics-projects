@@ -70,3 +70,5 @@ if __name__ == '__main__':
  "7": "KParking 2", "8" : " midpoint", "9": "left intersection", "10": "right intersection", "11":"bottom left ","12": "bottom center",
  "13": " bottom right", "14": " top left&", "15" : " top center& " ,"16": "top right&", "17": "empty 2 parking spots"}
 
+#[posX,posY,rotZ, rotW]
+{"mdden kruispunt": [-0.7951734662055969, -1.2317148447036743, 0.71693422 ],"linker middenintersectie": [-1.79713821411132, -1.30981993675233, 0.7905325],"rechter middenintersectie": [0.362673759468445, -0.94167077541351, 0.7731], "voor de rechtermiddenperkingtje": [0.3980456,-1.78620, -0.993364], "rechtermiddenparking": [0.165139432, -1.80085094, -0.9952321], "voor de linkermiddenparkingtje:": [0.407557815, -1.96464764, -0.98415673], "linker middenparkingtje": [0.223648490695933, -2.0316543, -0.9840345], "rechtero onderintersectie": [0.710141539573665, -2.8292450904846, -0.9817], "politiekantoor": [0.429612934589388, -2.94235181808, -0.6029], "onder middenintersectie": [ -0.405922250227928, -3.11896824836736, 0.80756, 0.589], "hospital": [-0.55752730369562, -2.74529743194586], "linker ondersectie": [] }
