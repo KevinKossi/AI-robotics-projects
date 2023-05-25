@@ -158,13 +158,8 @@ if __name__ == '__main__':
  
 
         shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
+        print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
         movebase_client(start_point, places[end_point])
 
         start_point = places[end_point]
-        
-        print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
 
-        # Move the Turtlebot along the path
-        # navigate_turtlebot(path)
-
-        # Update the start point for the next iteration
