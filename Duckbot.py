@@ -12,18 +12,18 @@ from nav_msgs.msg import Odometry
 
 
 # first bot = MamaEend => bringup bot 1 and give parameter [namespace: = mamaEend]
-cmd_vel_topic = '/mamaEend/cmd_vel'
-odom_topic = '/mamaEend/odom'
-scan_topic = '/mamaEend/scan'
-goal_topic = '/mamaEend/goal'
-path_topic = '/mamaEend/path'
+cmd_vel_topic = '/turtlebot1/cmd_vel'
+odom_topic = '/turtlebot1/odom'
+scan_topic = '/turtlebot1/scan'
+goal_topic = '/turtlebot1/goal'
+path_topic = '/turtlebot1/path'
 
 # other bots = eendje => bringup bots and give parameter [namespace: = eendjeEEN]
-cmd_vel_topic = '/eendje/cmd_vel'
-odom_topic = '/eendje/odom'
-scan_topic = '/eendje/scan'
-goal_topic = '/eendje/goal'
-path_topic = '/eendje/path'
+cmd_vel_topic = '/turtlebot1/cmd_vel'
+odom_topic = '/turtlebot1/odom'
+scan_topic = '/turtlebot1/scan'
+goal_topic = '/turtlebot1/goal'
+path_topic = '/turtlebot1/path'
 
 
 
