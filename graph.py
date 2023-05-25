@@ -29,10 +29,14 @@ def movebase_client(start,end):
 
    
     for i in range(len(path) - 1):
+        point = path[i]
+        print(locations[point][0])
+        print(locations[point][1])
+        
         goal.target_pose.header.frame_id = "map"
         goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position.x = locations[i][0]
-        goal.target_pose.pose.position.y = locations[i][1]
+        goal.target_pose.pose.position.x = locations[point][0]
+        goal.target_pose.pose.position.y = locations[point][1]
         goal.target_pose.pose.orientation.w = 1.0
         client.send_goal(goal)
         wait = client.wait_for_result()
