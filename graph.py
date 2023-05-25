@@ -22,18 +22,17 @@ def movebase_client(start,end):
 
     goal = MoveBaseGoal()
     
-    # Find the shortest path using Dijkstra's algorithm
     try:
         path = nx.dijkstra_path(G, start, end, weight="weight")
     except nx.NetworkXNoPath:
         return "No path found"
 
-    # Move the Turtlebot along the path
+   
     for i in range(len(path) - 1):
         goal.target_pose.header.frame_id = "map"
         goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position.x = path[i][0]
-        goal.target_pose.pose.position.y = path[i][1]
+        goal.target_pose.pose.position.x = locations[i][0]
+        goal.target_pose.pose.position.y = locations[i][1]
         goal.target_pose.pose.orientation.w = 1.0
         client.send_goal(goal)
         wait = client.wait_for_result()
@@ -107,7 +106,7 @@ def find_path(G, start_point, end_point):
         return None
 
 
-# Convert the locations dictionary to a graph representation
+
 graph = {
 
 }
@@ -132,20 +131,20 @@ nx.draw(G, with_labels=True)
 plt.show()
 
 if __name__ == '__main__':
-    # Define the initial start point
+    
     start_point = "centrale kruispunt"
 
     while True:
-        # Prompt the user to select a location
+
         for key in places.keys():
             print(key + " " +places[key])
             
         end_point = input("Select the number of new location:")
 
-            # Exit the loop if the user types 'exit'
+            # Exit the loop bij  'exit'
         if end_point.lower() == 'exit':
             break
-            # Check if the end point is valid
+            # Check als end point valid is 
         if end_point not in places:
             print("Invalid end point. Please try again.")
             continue
@@ -155,8 +154,8 @@ if __name__ == '__main__':
         print (places[end_point])
 
         
-        # # Find the shortest path using the Dijkstra algorithm
-        # path = find_path(G, start_point, end_point)
+        # implemeteer the Dijkstra algorithm
+ 
 
         shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
         movebase_client(start_point, places[end_point])
