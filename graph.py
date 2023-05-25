@@ -45,9 +45,9 @@ def movebase_client(start,end):
 
 locations = {
     # politiekantoor = achterkant , grote parking = voorkant ! 
-    "centrale kruispunt": [0.06667923, -0.239073623], #, 0.71693422 
-    "linkerarm kruispunt": [1.0797138214111, -0.34981993675233], #, 0.7905325
-    "Sam's huis (volledig links boven)": [1.0797138214111, -2.048434943 ],
+    "centrale kruispunt": [0.77859, -1.077846] , #[0.06667923, -0.239073623]
+    "linkerarm kruispunt": [1.0797138214111, -1.077846], #, 0.7905325
+    "Sam's huis (volledig links boven)": [-1.2997138214111, -0.7128434943 ],# [1.0797138214111, -2.048434943 ]
     " vóór de parkingspot 2 (kleine parking linksachter)": [1.0360345543, 2.0676534545],
     "parkingspot 2 (kleine parking linksachter)": [0.72214454, 2.15112667],
     " vóór de parkingspot 1 (kleine parking linksachter)": [1.022934435, 2.384958343],
@@ -71,7 +71,7 @@ locations = {
     "parkingspot 3 (grote parking)": [-0.80032, -1.6634342] ,
     " vóór de parkingspot 4 (grote parking)": [-1.0720345543, -1.8711843],
     "parkingspot 4 (grote parking)": [-0.80032, -1.8711843],
-    "centraal boven": [0.06667923, -2.0316543], # , -0.9840345
+    "centraal boven": [-0.4743, 0.0304] , # , -0.9840345 [0.06667923, -2.0316543]
 }
 
 # Define a dictionary of predefined locations and their coordinates
