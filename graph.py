@@ -4,7 +4,14 @@ import matplotlib.pyplot as plt
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from std_msgs.msg import String
+from sensor_msgs.msg import LaserScan
+from geometry_msgs.msg import Twist
+from nav_msgs.msg import Path
+from nav_msgs.msg import Odometry
 
+# Initialize the ROS node
+rospy.init_node('turtlebot_controller')
 # Create a directed graph using NetworkX
 G = nx.DiGraph()
 
