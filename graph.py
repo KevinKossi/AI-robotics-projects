@@ -124,41 +124,41 @@ for loc1, coords1 in locations.items():
 nx.draw(G, with_labels=True)
 plt.show()
 
+if __name__ == '__main__':
+    # Define the initial start point
+    start_point = "centrale kruispunt"
 
-# Define the initial start point
-start_point = "centrale kruispunt"
+    while True:
+        # Prompt the user to select a location
+        for key in places.keys():
+            print(key + " " +places[key])
+            
+        end_point = input("Select the number of new location:")
 
-while True:
-    # Prompt the user to select a location
-    for key in places.keys():
-        print(key + " " +places[key])
+            # Exit the loop if the user types 'exit'
+        if end_point.lower() == 'exit':
+            break
+            # Check if the end point is valid
+        if end_point not in places:
+            print("Invalid end point. Please try again.")
+            continue
+
+
+        print ("you selected:")
+        print (places[end_point])
+
         
-    end_point = input("Select the number of new location:")
+        # # Find the shortest path using the Dijkstra algorithm
+        # path = find_path(G, start_point, end_point)
 
-        # Exit the loop if the user types 'exit'
-    if end_point.lower() == 'exit':
-        break
-        # Check if the end point is valid
-    if end_point not in places:
-        print("Invalid end point. Please try again.")
-        continue
+        shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
+        movebase_client(start_point, places[end_point])
 
+        start_point = places[end_point]
+        
+        print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
 
-    print ("you selected:")
-    print (places[end_point])
+        # Move the Turtlebot along the path
+        # navigate_turtlebot(path)
 
-     
-    # # Find the shortest path using the Dijkstra algorithm
-    # path = find_path(G, start_point, end_point)
-
-    shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
-    movebase_client(start_point, places[end_point])
-
-    start_point = places[end_point]
-    
-    print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
-
-    # Move the Turtlebot along the path
-    # navigate_turtlebot(path)
-
-    # Update the start point for the next iteration
+        # Update the start point for the next iteration
