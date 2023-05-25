@@ -22,13 +22,12 @@ def movebase_client(start,end):
 
     goal = MoveBaseGoal()
     
-    # Find the shortest path using Dijkstra's algorithm
     try:
         path = nx.dijkstra_path(G, start, end, weight="weight")
     except nx.NetworkXNoPath:
         return "No path found"
 
-    # Move the Turtlebot along the path
+   
     for i in range(len(path) - 1):
         point = path[i]
         print(locations[point][0])
@@ -111,7 +110,7 @@ def find_path(G, start_point, end_point):
         return None
 
 
-# Convert the locations dictionary to a graph representation
+
 graph = {
 
 }
@@ -136,20 +135,20 @@ nx.draw(G, with_labels=True)
 plt.show()
 
 if __name__ == '__main__':
-    # Define the initial start point
+    
     start_point = "centrale kruispunt"
 
     while True:
-        # Prompt the user to select a location
+
         for key in places.keys():
             print(key + " " +places[key])
             
         end_point = input("Select the number of new location:")
 
-            # Exit the loop if the user types 'exit'
+            # Exit the loop bij  'exit'
         if end_point.lower() == 'exit':
             break
-            # Check if the end point is valid
+            # Check als end point valid is 
         if end_point not in places:
             print("Invalid end point. Please try again.")
             continue
@@ -159,17 +158,12 @@ if __name__ == '__main__':
         print (places[end_point])
 
         
-        # # Find the shortest path using the Dijkstra algorithm
-        # path = find_path(G, start_point, end_point)
+        # implemeteer the Dijkstra algorithm
+ 
 
         shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
+        print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
         movebase_client(start_point, places[end_point])
 
         start_point = places[end_point]
-        
-        print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
 
-        # Move the Turtlebot along the path
-        # navigate_turtlebot(path)
-
-        # Update the start point for the next iteration
