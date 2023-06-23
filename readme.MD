@@ -38,3 +38,7 @@ Eveneens experimenteer ik ook met de namespaces
 1. zorg dat de turtlebot verbonden is met de rosserver
 2. start RVIZ op met de schoolmap
 3. typ commando " python3 graph.py" 
+
+mkdir -p scripts
+mv your_repository/your_python_script.py scripts
+chmod +x scripts/your_python_script.py

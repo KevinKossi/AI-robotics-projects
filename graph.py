@@ -167,3 +167,5 @@ if __name__ == '__main__':
 
         start_point = places[end_point]
 
+
+#[ERROR] [1687517702.038038, 97.835000]: Action server not available!
