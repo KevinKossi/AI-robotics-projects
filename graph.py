@@ -21,9 +21,9 @@ locations = {
     "centrale kruispunt": [0.000, -0.28846] , #[0.06667923, -0.239073623]
     "linkerarm kruispunt": [1.0797138214111, -1.077846], #, 0.7905325
     "Sam's huis (volledig links boven)": [-1.2997138214111, -0.7128434943 ],# [1.0797138214111, -2.048434943 ]
-    " vóór de parkingspot 2 (kleine parking linksachter)": [1.0360345543, 2.0676534545],
+    "vóór de parkingspot 2 (kleine parking linksachter)": [1.0360345543, 2.0676534545],
     "parkingspot 2 (kleine parking linksachter)": [0.72214454, 2.15112667],
-    " vóór de parkingspot 1 (kleine parking linksachter)": [1.022934435, 2.384958343],
+    "vóór de parkingspot 1 (kleine parking linksachter)": [1.022934435, 2.384958343],
     "parkingspot 1 (kleine parking linksachter)": [0.74489343, 2.3411932],
     "linker arm onder T kruis": [1.038435534, 1.52748903],
     "centrale punt onder T kruis": [0.0536745, 1.52748903],
@@ -31,29 +31,30 @@ locations = {
     "thuis": [0.3284343, 1.670032],
     "politiekantoor": [-0.53464543, -1.69711], # , -0.6029
     "rechterarm onder T kruis": [-1.14266, 1.52748903],
-    " vóór de parkingspot 1 (kleine parking midden)": [-1.0270345543, 0.563534545],
+    "vóór de parkingspot 1 (kleine parking midden)": [-1.0270345543, 0.563534545],
     "parkingspot 1 (kleine parking midden)": [-0.80017, 0.62294] ,
-    " vóór de parkingspot 2 (kleine parking midden)": [-1.0270345543, 0.401188343],
+    "vóór de parkingspot 2 (kleine parking midden)": [-1.0270345543, 0.401188343],
     "parkingspot 2 (kleine parking midden)": [-0.8222154, 0.3752667],
     "rechterarm kruispunt": [-1.1811, -0.25388], 
-    " vóór de parkingspot 1 (grote parking)": [-1.0720345543, -1.21454545],
+    "vóór de parkingspot 1 (grote parking)": [-1.0720345543, -1.21454545],
     "parkingspot 1 (grote parking)": [-0.80032, -1.21454545] ,
-    " vóór de parkingspot 2 (grote parking)": [-1.0720345543, -1.421454545],
+    "vóór de parkingspot 2 (grote parking)": [-1.0720345543, -1.421454545],
     "parkingspot 2 (grote parking)": [-0.80032, -1.421454545],
-    " vóór de parkingspot 3 (grote parking)": [-1.0720345543, -1.6634342],
+    "vóór de parkingspot 3 (grote parking)": [-1.0720345543, -1.6634342],
     "parkingspot 3 (grote parking)": [-0.80032, -1.6634342] ,
-    " vóór de parkingspot 4 (grote parking)": [-1.0720345543, -1.8711843],
+    "vóór de parkingspot 4 (grote parking)": [-1.0720345543, -1.8711843],
     "parkingspot 4 (grote parking)": [-0.80032, -1.8711843],
     "centraal boven": [-0.4743, 0.0304] , # , -0.9840345 [0.06667923, -2.0316543]
+    "charging station (grote parking)": [-1.1284,-1.4429],
 }
 
 # Define a dictionary of predefined locations and their coordinates
-places = {"1": "centrale kruispunt","2": "Sam's huis (volledig links boven)","3": "parkingspot 2 (kleine parking linksachter)" ,"4": "parkingspot 1 (kleine parking linksachter)","5": "hospital","6": "thuis", "7": "politiekantoor", "9": "centraal boven", "10": "onder middenintersectie",  "12": "parkingspot 1 (kleine parking midden)",  "13": "parkingspot 2 (kleine parking midden)", "14": "parkingspot 1 (grote parking)", "15": "parkingspot 2 (grote parking)", "16": "parkingspot 3 (grote parking)", "17": "parkingspot 4 (grote parking)", "18": "centraal boven" }
+places = {"1": "centrale kruispunt","2": "Sam's huis (volledig links boven)","3": "parkingspot 2 (kleine parking linksachter)" ,"4": "parkingspot 1 (kleine parking linksachter)","5": "hospital","6": "thuis", "7": "politiekantoor", "9": "centraal boven", "10": "onder middenintersectie",  "12": "parkingspot 1 (kleine parking midden)",  "13": "parkingspot 2 (kleine parking midden)", "14": "parkingspot 1 (grote parking)", "15": "parkingspot 2 (grote parking)", "16": "parkingspot 3 (grote parking)", "17": "parkingspot 4 (grote parking)", "18": "centraal boven", "19": "charging station (grote parking)" }
 
 
-def movebase_client(start,end):
-    shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
-    print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
+def movebase_client(start_point,end):
+    shortest_path = nx.dijkstra_path(G,source= start_point, target= end , weight="weight")
+    print(f"Shortest path from {start_point} to {end}: {shortest_path}")
     
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
     client.wait_for_server()
@@ -73,6 +74,7 @@ def movebase_client(start,end):
         goal.target_pose.pose.position.y = locations[point][1]
         goal.target_pose.pose.orientation.w = 1.0
         client.send_goal(goal)
+        print(f"going to {point} !! ")
         wait = client.wait_for_result()
         if not wait:
             rospy.logerr("Action server not available!")
