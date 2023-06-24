@@ -15,41 +15,10 @@ rospy.init_node('turtlebot_controller')
 # Create a directed graph using NetworkX
 G = nx.DiGraph()
 
-def movebase_client(start,end):
-
-    client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
-    client.wait_for_server()
-
-    goal = MoveBaseGoal()
-    
-    try:
-        path = nx.dijkstra_path(G, start, end, weight="weight")
-    except nx.NetworkXNoPath:
-        return "No path found"
-
-   
-    for i in range(len(path) - 1):
-        point = path[i]
-        print(locations[point][0])
-        print(locations[point][1])
-        
-        goal.target_pose.header.frame_id = "map"
-        goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position.x = locations[point][0]
-        goal.target_pose.pose.position.y = locations[point][1]
-        goal.target_pose.pose.orientation.w = 1.0
-        client.send_goal(goal)
-        wait = client.wait_for_result()
-        if not wait:
-            rospy.logerr("Action server not available!")
-            rospy.signal_shutdown("Action server not available!")
-        else:
-            return client.get_result()
-
-
+# initialze the locations 
 locations = {
     # politiekantoor = achterkant , grote parking = voorkant ! 
-    "centrale kruispunt": [0.77859, -1.077846] , #[0.06667923, -0.239073623]
+    "centrale kruispunt": [0.000, -0.28846] , #[0.06667923, -0.239073623]
     "linkerarm kruispunt": [1.0797138214111, -1.077846], #, 0.7905325
     "Sam's huis (volledig links boven)": [-1.2997138214111, -0.7128434943 ],# [1.0797138214111, -2.048434943 ]
     " vóór de parkingspot 2 (kleine parking linksachter)": [1.0360345543, 2.0676534545],
@@ -80,6 +49,38 @@ locations = {
 
 # Define a dictionary of predefined locations and their coordinates
 places = {"1": "centrale kruispunt","2": "Sam's huis (volledig links boven)","3": "parkingspot 2 (kleine parking linksachter)" ,"4": "parkingspot 1 (kleine parking linksachter)","5": "hospital","6": "thuis", "7": "politiekantoor", "9": "centraal boven", "10": "onder middenintersectie",  "12": "parkingspot 1 (kleine parking midden)",  "13": "parkingspot 2 (kleine parking midden)", "14": "parkingspot 1 (grote parking)", "15": "parkingspot 2 (grote parking)", "16": "parkingspot 3 (grote parking)", "17": "parkingspot 4 (grote parking)", "18": "centraal boven" }
+
+
+def movebase_client(start,end):
+    shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
+    print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
+    
+    client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+    client.wait_for_server()
+
+    goal = MoveBaseGoal()
+    
+
+    for i in range(len(shortest_path) - 1):
+        point = shortest_path[i]
+
+        print(locations[point][0])
+        print(locations[point][1])
+        
+        goal.target_pose.header.frame_id = "map"
+        goal.target_pose.header.stamp = rospy.Time.now()
+        goal.target_pose.pose.position.x = locations[point][0]
+        goal.target_pose.pose.position.y = locations[point][1]
+        goal.target_pose.pose.orientation.w = 1.0
+        client.send_goal(goal)
+        wait = client.wait_for_result()
+        if not wait:
+            rospy.logerr("Action server not available!")
+            rospy.signal_shutdown("Action server not available!")
+        else:
+            return client.get_result()
+
+
 
 def euclidean_distance(coords1, coords2):
     x1, y1 = coords1
@@ -126,7 +127,7 @@ for loc1, coords1 in locations.items():
     for loc2, coords2 in locations.items():
         if loc1 != loc2:
             distance = euclidean_distance(coords1[:2], coords2[:2])
-            if distance <= 1.8:
+            if distance <= 1.6:
                 G.add_edge(loc1, loc2, weight=distance)
                 graph[loc1].append(loc2)
 
@@ -161,17 +162,8 @@ if __name__ == '__main__':
         # implemeteer the Dijkstra algorithm
  
 
-        shortest_path = nx.dijkstra_path(G,source= start_point, target= places[end_point] , weight="weight")
-        print(f"Shortest path from {start_point} to {places[end_point]}: {shortest_path}")
+
         movebase_client(start_point, places[end_point])
 
         start_point = places[end_point]
 
-
-#[ERROR] [1687517702.038038, 97.835000]: Action server not available!
-
-# $ cd ~/catkin_ws/src/
-# $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
-# $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
-# $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-# $ cd ~/catkin_ws && catkin_make
