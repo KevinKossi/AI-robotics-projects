@@ -60,27 +60,28 @@ def movebase_client(start_point,end):
     client.wait_for_server()
 
     goal = MoveBaseGoal()
-    
+    m = 0
+    while m <= len(shortest_path) - 1:
+        for i in range(len(shortest_path) - 1):
+            point = shortest_path[i + 1]
 
-    for i in range(len(shortest_path) - 1):
-        point = shortest_path[i]
-
-        print(locations[point][0])
-        print(locations[point][1])
-        
-        goal.target_pose.header.frame_id = "map"
-        goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position.x = locations[point][0]
-        goal.target_pose.pose.position.y = locations[point][1]
-        goal.target_pose.pose.orientation.w = 1.0
-        client.send_goal(goal)
-        print(f"going to {point} !! ")
-        wait = client.wait_for_result()
-        if not wait:
-            rospy.logerr("Action server not available!")
-            rospy.signal_shutdown("Action server not available!")
-        else:
-            return client.get_result()
+            print(locations[point][0])
+            print(locations[point][1])
+            
+            goal.target_pose.header.frame_id = "map"
+            goal.target_pose.header.stamp = rospy.Time.now()
+            goal.target_pose.pose.position.x = locations[point][0]
+            goal.target_pose.pose.position.y = locations[point][1]
+            goal.target_pose.pose.orientation.w = 1.0
+            client.send_goal(goal)
+            print(f"going to {point} !! ")
+            wait = client.wait_for_result()
+            if not wait:
+                rospy.logerr("Action server not available!")
+                rospy.signal_shutdown("Action server not available!")
+            else:
+                return client.get_result()
+        m =+ 1
 
 
 
